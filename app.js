@@ -1,22 +1,25 @@
 // ===== 奖品池 =====
 const PRIZES = [
-  { id: 'kb', emoji: '⌨️', name: '定制键盘', desc: '追克零35轴·为你手工组装的独一无二键盘' },
-  { id: 'hp', emoji: '🎧', name: '头戴式耳机', desc: '好看又舒适的耳机·办公听歌两不误' },
-  { id: 'nk', emoji: '📿', name: '项链', desc: '百搭款项链·每天都可以戴的小闪耀' },
-  { id: 'ck', emoji: '🎂', name: '生日蛋糕', desc: '布歌东京·你说过觉得不错的那家' },
-  { id: 'fl', emoji: '💐', name: '永生花', desc: '不会凋零的花·就像我对你的心意' },
-  { id: 'ph', emoji: '📱', name: '手机背带', desc: '可爱新背带·换掉你那个旧旧的' },
-  { id: 'lt', emoji: '💌', name: '手写信', desc: '第34封信·距上一封已经三年了' }
+  { id: 'ck', emoji: '🎂', name: '生日蛋糕', desc: '不知道巧克力和开心果搭配，会不会一样美味' },
+  { id: 'ph', emoji: '📱', name: '手机背带', desc: '哈哈哈这也能算礼物吗？' },
+  { id: 'kb', emoji: '⌨️', name: '定制键盘', desc: '这真的是独一无二的键盘呢，嘻嘻' },
+  { id: 'hp', emoji: '🎧', name: '耳机', desc: '耳机还得是带麦克风的，实用' },
+  { id: 'nk', emoji: '📿', name: '项链', desc: '希望这个项链能受到宝的青睐' },
+  { id: 'fl', emoji: '💐', name: '永生花', desc: '你说你不喜欢看鲜花凋零' },
+  { id: 'lt', emoji: '💌', name: '信', desc: '第34封，希望不会来得太晚' }
 ];
 
-// ===== 任务池 =====
+// 固定抽奖顺序：蛋糕→背带→随机→...→信最后
+const FIXED_ORDER = ['ck', 'ph', null, null, null, null, 'lt'];
+
+// ===== 任务池（牵、抱、亲、唱歌、自拍、许愿）=====
 const TASKS = [
-  { id: 't1', icon: '🤗', text: '给我一个拥抱', reward: '拥抱是最好的充电方式' },
-  { id: 't2', icon: '😘', text: '亲我一下', reward: '能量已充满！' },
-  { id: 't3', icon: '💃', text: '转一个圈', reward: '你转圈的样子真好看' },
-  { id: 't4', icon: '📸', text: '跟我自拍一张', reward: '存入永久记忆库' },
-  { id: 't5', icon: '🎵', text: '唱一句歌给我听', reward: '全世界最好听的声音' },
-  { id: 't6', icon: '✌️', text: '比个耶让我看看', reward: '✌️ 收到！' }
+  { id: 't1', icon: '🤝', text: '牵我的手', reward: '手心的温度刚刚好' },
+  { id: 't2', icon: '🤗', text: '抱我一下', reward: '拥抱是最好的充电方式' },
+  { id: 't3', icon: '😘', text: '亲我一下', reward: '能量已充满！' },
+  { id: 't4', icon: '🎵', text: '唱一句歌给我听', reward: '全世界最好听的声音' },
+  { id: 't5', icon: '📸', text: '跟我自拍一张', reward: '存入永久记忆库' },
+  { id: 't6', icon: '🌟', text: '许一个愿', reward: '愿望一定会实现的' }
 ];
 
 // ===== 状态 =====
@@ -104,14 +107,6 @@ function render() {
     tl.appendChild(d);
   });
 
-  // 说话输入
-  const speakBtn = document.getElementById('speakBtn');
-  const speakInput = document.getElementById('speakInput');
-  if (state.wonPrizes.length >= PRIZES.length) {
-    speakBtn.disabled = true;
-    speakInput.disabled = true;
-  }
-
   saveState();
 }
 
@@ -135,8 +130,17 @@ function doDraw() {
   function flash() {
     slots.forEach(s => s.classList.remove('drawing'));
     if (count >= totalFlashes) {
-      // 确定中奖
-      const winner = remaining[Math.floor(Math.random() * remaining.length)];
+      // 按固定顺序决定中奖
+      const drawIndex = state.wonPrizes.length; // 这是第几次抽(0-based)
+      const fixedId = FIXED_ORDER[drawIndex] || null;
+      let winner;
+      if (fixedId) {
+        winner = remaining.find(p => p.id === fixedId) || remaining[Math.floor(Math.random() * remaining.length)];
+      } else {
+        // 中间随机，但排除最后一个(信)
+        const pool = remaining.filter(p => p.id !== 'lt' || remaining.length === 1);
+        winner = pool[Math.floor(Math.random() * pool.length)];
+      }
       state.wonPrizes.push(winner.id);
       saveState();
       render();
@@ -157,17 +161,6 @@ function completeTask(id, reward) {
   if (state.doneTasks.includes(id)) return;
   state.doneTasks.push(id);
   state.chances++;
-  render();
-}
-
-// ===== 说话获取机会 =====
-function doSpeak() {
-  const input = document.getElementById('speakInput');
-  const val = input.value.trim();
-  if (!val) return;
-  state.spokenCount++;
-  state.chances++;
-  input.value = '';
   render();
 }
 
@@ -240,8 +233,4 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
   render();
-  // 回车提交
-  document.getElementById('speakInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') doSpeak();
-  });
 });
