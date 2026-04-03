@@ -76,12 +76,13 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#1a1a2e;c
 .modal button{padding:10px 32px;border:none;border-radius:14px;background:linear-gradient(135deg,#ff6b9d,#c44dff);color:#fff;font-size:1em;font-weight:600;cursor:pointer}
 
 /* 完成页 */
-.finish{display:none;text-align:center;padding:60px 20px}
-.finish.show{display:block}
-.finish h1{font-size:2em;background:linear-gradient(135deg,#ff6b9d,#c44dff,#6ec6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px}
-.finish p{color:rgba(255,255,255,.7);font-size:1.05em;line-height:1.8}
-.finish .trophy{font-size:5em;margin-bottom:16px;animation:wiggle 2s ease-in-out infinite}
-@keyframes wiggle{0%,100%{transform:rotate(0deg)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+.finish{display:none;text-align:center;padding:0 20px;position:fixed;inset:0;z-index:100;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);flex-direction:column;align-items:center;justify-content:center;cursor:pointer}
+.finish.show{display:flex}
+.finish h1{font-size:1.8em;background:linear-gradient(135deg,#ff6b9d,#c44dff,#6ec6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:32px;letter-spacing:2px}
+.finish .finish-line1{color:rgba(255,255,255,.6);font-size:1.05em;margin-bottom:16px;letter-spacing:1px}
+.finish .finish-line2{color:rgba(255,255,255,.85);font-size:1.15em;font-weight:500;margin-bottom:48px;letter-spacing:1px}
+.finish .finish-sign{color:#ff6b9d;font-size:1.2em;font-weight:600;letter-spacing:2px}
+.finish .finish-hint{color:rgba(255,255,255,.25);font-size:.82em;margin-top:60px;animation:pulse 1.5s infinite}
 
 /* 彩带 */
 .confetti{position:fixed;top:-10px;z-index:150;pointer-events:none}
