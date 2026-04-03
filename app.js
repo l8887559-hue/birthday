@@ -1,6 +1,6 @@
 // ===== 奖品池 =====
 const PRIZES = [
-  { id: 'ck', emoji: '🎂', name: '生日蛋糕', desc: '不知道巧克力和开心果搭配，会不会一样美味' },
+  { id: 'ck', emoji: '🎂', name: '生日蛋糕', desc: '不知道巧克力和开心果搭配\n会不会一样美味' },
   { id: 'ph', emoji: '📱', name: '手机背带', desc: '哈哈哈这也能算礼物吗？' },
   { id: 'kb', emoji: '⌨️', name: '定制键盘', desc: '这真的是独一无二的键盘呢，嘻嘻' },
   { id: 'hp', emoji: '🎧', name: '耳机', desc: '耳机还得是带麦克风的，实用' },
@@ -169,7 +169,7 @@ function showModal(prize) {
   const overlay = document.getElementById('modal');
   document.getElementById('modalEmoji').textContent = prize.emoji;
   document.getElementById('modalTitle').textContent = '恭喜获得：' + prize.name;
-  document.getElementById('modalDesc').textContent = prize.desc;
+  document.getElementById('modalDesc').innerHTML = prize.desc.replace(/\n/g, '<br>');
   overlay.classList.add('show');
   spawnConfetti();
 }
