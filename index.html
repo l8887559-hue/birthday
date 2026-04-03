@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>🎂 生日惊喜</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 开场页 -->
+<div id="intro" onclick="startGame()">
+  <h1>🎂 生日快乐</h1>
+  <p>点击屏幕开始你的惊喜之旅 ✨</p>
+</div>
+
+<!-- 粒子背景 -->
+<div class="particles"></div>
+
+<!-- 主界面 -->
+<div class="main">
+  <div class="top-bar">
+    <h2>🎁 生日礼物抽奖</h2>
+    <div class="chances">抽奖机会：<span class="num" id="chanceNum">1</span> 次</div>
+  </div>
+
+  <!-- 奖品展示 -->
+  <div class="prizes" id="prizeGrid"></div>
+
+  <!-- 抽奖按钮 -->
+  <button class="draw-btn" id="drawBtn" onclick="doDraw()">🎰 抽奖！</button>
+
+  <!-- 任务区 -->
+  <div class="task-section">
+    <h3>✨ 完成任务赢机会</h3>
+    <div id="taskList"></div>
+  </div>
+
+  <!-- 说话区 -->
+  <div class="speak-section">
+    <h3>💬 说句话也能抽奖</h3>
+    <div class="speak-row">
+      <input class="speak-input" id="speakInput" placeholder="对我说点什么吧..." maxlength="100">
+      <button class="speak-submit" id="speakBtn" onclick="doSpeak()">发送 +1</button>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:8px">
+    <span onclick="resetGame()" style="color:rgba(255,255,255,.2);font-size:.75em;cursor:pointer">重置</span>
+  </div>
+</div>
+
+<!-- 中奖弹窗 -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="big-emoji" id="modalEmoji">🎁</div>
+    <h2 id="modalTitle">恭喜！</h2>
+    <p id="modalDesc"></p>
+    <button onclick="closeModal()">开心收下 💕</button>
+  </div>
+</div>
+
+<!-- 完成页 -->
+<div class="finish">
+  <div class="trophy">🏆</div>
+  <h1>所有礼物都是你的！</h1>
+  <p style="margin-top:16px">
+    这些都是我精心为你准备的<br>
+    每一份都带着我的心意<br><br>
+    🎂 生日快乐，我最爱的人 💕
+  </p>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
