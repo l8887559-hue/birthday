@@ -1,14 +1,14 @@
 /* ===== 全局 ===== */
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#1a1a2e;color:#fff;min-height:100vh;overflow-x:hidden}
+body{font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:#0e0e1a;color:#fff;min-height:100vh;overflow-x:hidden}
 
 /* ===== 开场页 ===== */
 #intro{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);cursor:pointer;transition:opacity .6s}
 #intro.hide{opacity:0;pointer-events:none}
-#intro h1{font-size:2.8em;background:linear-gradient(135deg,#ff6b9d,#c44dff,#6ec6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:glow 2s ease-in-out infinite alternate;margin-bottom:12px}
-#intro p{color:rgba(255,255,255,.6);font-size:1.1em;animation:pulse 1.5s infinite}
+#intro h1{font-size:2.4em;background:linear-gradient(135deg,#ff6b9d,#c44dff,#6ec6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:glow 2s ease-in-out infinite alternate;margin-bottom:12px;letter-spacing:2px}
+#intro p{color:rgba(255,255,255,.5);font-size:1em;animation:pulse 1.5s infinite;letter-spacing:1px}
 @keyframes glow{from{filter:brightness(1)}to{filter:brightness(1.3)}}
-@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
 
 /* ===== 粒子背景 ===== */
 .particles{position:fixed;inset:0;z-index:0;pointer-events:none}
@@ -16,74 +16,64 @@ body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#1a1a2e;c
 @keyframes float{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-10vh) scale(1);opacity:0}}
 
 /* ===== 主界面 ===== */
-.main{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:24px 16px;display:none}
+.main{position:relative;z-index:1;max-width:420px;margin:0 auto;padding:36px 16px 24px;display:none}
 .main.show{display:block}
 
-/* 顶部信息 */
-.top-bar{text-align:center;margin-bottom:20px}
-.top-bar h2{font-size:1.4em;color:#ff6b9d;margin-bottom:6px}
-.chances{display:inline-flex;align-items:center;gap:6px;background:rgba(255,107,157,.15);padding:6px 18px;border-radius:20px;font-size:1em}
-.chances .num{color:#ff6b9d;font-weight:700;font-size:1.3em}
+/* 顶部 */
+.top-bar{text-align:center;margin-bottom:28px}
+.top-bar h2{font-size:1.2em;color:rgba(255,255,255,.85);font-weight:400;letter-spacing:3px;margin-bottom:12px}
+.chances{display:inline-flex;align-items:center;gap:6px;padding:6px 20px;border-radius:24px;font-size:.9em;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);letter-spacing:1px}
+.chances .num{color:#ff6b9d;font-weight:700;font-size:1.4em}
 
-/* 奖品展示区 */
-.prizes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
-.prize-slot{background:rgba(255,255,255,.08);border-radius:14px;padding:14px 8px;text-align:center;border:2px solid rgba(255,255,255,.1);transition:all .3s;position:relative;overflow:hidden}
-.prize-slot .emoji{font-size:2em;display:block;margin-bottom:4px}
-.prize-slot .pname{font-size:.8em;color:rgba(255,255,255,.7)}
-.prize-slot.won{border-color:#ff6b9d;background:rgba(255,107,157,.15)}
-.prize-slot.won::after{content:'✓';position:absolute;top:4px;right:6px;color:#ff6b9d;font-weight:700;font-size:.85em}
-.prize-slot.drawing{animation:slotGlow .15s ease-in-out infinite alternate;border-color:#ffd700}
-@keyframes slotGlow{from{background:rgba(255,215,0,.1);box-shadow:0 0 8px rgba(255,215,0,.3)}to{background:rgba(255,215,0,.25);box-shadow:0 0 16px rgba(255,215,0,.5)}}
+/* ===== 奖品格子 - 圆形排列 ===== */
+.prizes-wrap{margin-bottom:24px}
+#prizeGrid{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding:0 8px}
+.prize-slot{width:80px;height:80px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);transition:all .3s;position:relative;cursor:default}
+.prize-slot .emoji{font-size:1.6em;line-height:1;margin-bottom:2px}
+.prize-slot .pname{font-size:.6em;color:rgba(255,255,255,.4);letter-spacing:.5px}
+.prize-slot.won{border-color:rgba(255,107,157,.5);background:rgba(255,107,157,.1)}
+.prize-slot.won .pname{color:rgba(255,107,157,.8)}
+.prize-slot.won::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:1px solid rgba(255,107,157,.3);animation:ripple 2s ease-out infinite}
+@keyframes ripple{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.3);opacity:0}}
+.prize-slot.drawing{border-color:#ffd700;background:rgba(255,215,0,.15);box-shadow:0 0 20px rgba(255,215,0,.2)}
 
-/* 抽奖按钮 */
-.draw-btn{display:block;width:100%;padding:16px;border:none;border-radius:16px;font-size:1.2em;font-weight:700;color:#fff;cursor:pointer;background:linear-gradient(135deg,#ff6b9d,#c44dff);box-shadow:0 4px 20px rgba(196,77,255,.3);transition:all .2s;margin-bottom:16px}
-.draw-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 6px 28px rgba(196,77,255,.5)}
-.draw-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+/* ===== 开启按钮 ===== */
+.draw-btn{display:block;width:200px;margin:0 auto 28px;padding:14px 0;border:none;border-radius:28px;font-size:1.05em;font-weight:500;color:#fff;cursor:pointer;background:linear-gradient(135deg,#ff6b9d,#c44dff);letter-spacing:4px;transition:all .25s;box-shadow:0 4px 24px rgba(196,77,255,.25)}
+.draw-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 32px rgba(196,77,255,.4)}
+.draw-btn:disabled{opacity:.25;cursor:not-allowed;transform:none;box-shadow:none}
 .draw-btn:active:not(:disabled){transform:translateY(0)}
 
-/* 任务区 */
-.task-section{background:rgba(255,255,255,.06);border-radius:16px;padding:18px;margin-bottom:16px}
-.task-section h3{font-size:1em;color:#6ec6ff;margin-bottom:12px;display:flex;align-items:center;gap:6px}
-.task-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.06);border-radius:10px;margin-bottom:8px;transition:all .2s}
-.task-item.done{opacity:.4}
-.task-item .ticon{font-size:1.2em}
-.task-item .tinfo{flex:1;font-size:.9em}
-.task-item .tinfo small{color:rgba(255,255,255,.5);display:block;font-size:.82em}
-.task-btn{padding:6px 14px;border:1.5px solid #6ec6ff;background:transparent;color:#6ec6ff;border-radius:16px;font-size:.82em;cursor:pointer;transition:all .2s;white-space:nowrap}
-.task-btn:hover:not(:disabled){background:#6ec6ff;color:#1a1a2e}
-.task-btn:disabled{opacity:.3;cursor:not-allowed}
+/* ===== 任务区 ===== */
+.task-section{background:rgba(255,255,255,.03);border-radius:20px;padding:20px 16px;margin-bottom:12px;border:1px solid rgba(255,255,255,.05)}
+.task-section h3{font-size:.85em;color:rgba(255,255,255,.35);margin-bottom:14px;text-align:center;letter-spacing:2px;font-weight:400}
+.task-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;margin-bottom:6px;transition:all .2s;background:transparent}
+.task-item:hover:not(.done){background:rgba(255,255,255,.03)}
+.task-item.done{opacity:.35}
+.task-item .ticon{font-size:1.3em;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.05);flex-shrink:0}
+.task-item .tinfo{flex:1;font-size:.92em;color:rgba(255,255,255,.7);letter-spacing:.5px}
+.task-btn{padding:7px 18px;border:1px solid rgba(255,107,157,.4);background:transparent;color:#ff6b9d;border-radius:20px;font-size:.8em;cursor:pointer;transition:all .2s;letter-spacing:1px}
+.task-btn:hover:not(:disabled){background:rgba(255,107,157,.15)}
+.task-btn:disabled{opacity:.2;cursor:not-allowed}
 
-/* 说话区 */
-.speak-section{background:rgba(255,255,255,.06);border-radius:16px;padding:18px;margin-bottom:16px}
-.speak-section h3{font-size:1em;color:#ffd700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.speak-row{display:flex;gap:8px}
-.speak-input{flex:1;padding:10px 14px;border:1.5px solid rgba(255,215,0,.3);background:rgba(255,255,255,.06);border-radius:12px;color:#fff;font-size:.95em;outline:none}
-.speak-input::placeholder{color:rgba(255,255,255,.3)}
-.speak-input:focus{border-color:#ffd700}
-.speak-submit{padding:10px 18px;border:none;border-radius:12px;background:linear-gradient(135deg,#ffd700,#ffb300);color:#1a1a2e;font-weight:600;cursor:pointer;font-size:.9em;transition:all .2s}
-.speak-submit:hover:not(:disabled){transform:translateY(-1px)}
-.speak-submit:disabled{opacity:.3;cursor:not-allowed}
-
-/* 弹窗 */
-.modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+/* ===== 弹窗 ===== */
+.modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
 .modal-overlay.show{display:flex}
-.modal{background:linear-gradient(135deg,#1e1e3f,#2a1a4e);border-radius:20px;padding:36px 28px;text-align:center;max-width:360px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5);border:1px solid rgba(255,107,157,.2);animation:modalIn .4s ease}
-@keyframes modalIn{from{transform:scale(.7)translateY(30px);opacity:0}to{transform:scale(1)translateY(0);opacity:1}}
-.modal .big-emoji{font-size:4em;margin-bottom:12px;animation:bounce .6s ease}
-@keyframes bounce{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
-.modal h2{font-size:1.3em;color:#ff6b9d;margin-bottom:6px}
-.modal p{color:rgba(255,255,255,.7);font-size:.95em;margin-bottom:18px}
-.modal button{padding:10px 32px;border:none;border-radius:14px;background:linear-gradient(135deg,#ff6b9d,#c44dff);color:#fff;font-size:1em;font-weight:600;cursor:pointer}
+.modal{background:linear-gradient(160deg,#1a1a2e,#1e1e3f);border-radius:24px;padding:40px 28px 32px;text-align:center;max-width:320px;width:88%;box-shadow:0 24px 64px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.06);animation:modalIn .4s ease}
+@keyframes modalIn{from{transform:scale(.85)translateY(20px);opacity:0}to{transform:scale(1)translateY(0);opacity:1}}
+.modal .big-emoji{font-size:3.2em;margin-bottom:16px}
+.modal h2{font-size:1.15em;color:#ff6b9d;margin-bottom:8px;font-weight:500;letter-spacing:1px}
+.modal p{color:rgba(255,255,255,.6);font-size:.92em;margin-bottom:24px;line-height:1.7;letter-spacing:.5px}
+.modal button{padding:11px 36px;border:none;border-radius:20px;background:linear-gradient(135deg,#ff6b9d,#c44dff);color:#fff;font-size:.92em;font-weight:500;cursor:pointer;letter-spacing:2px;transition:all .2s}
+.modal button:hover{transform:translateY(-1px)}
 
-/* 完成页 */
+/* ===== 完成页 ===== */
 .finish{display:none;text-align:center;padding:0 20px;position:fixed;inset:0;z-index:100;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);flex-direction:column;align-items:center;justify-content:center;cursor:pointer}
 .finish.show{display:flex}
 .finish h1{font-size:1.8em;background:linear-gradient(135deg,#ff6b9d,#c44dff,#6ec6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:32px;letter-spacing:2px}
-.finish .finish-line1{color:rgba(255,255,255,.6);font-size:1.05em;margin-bottom:16px;letter-spacing:1px}
-.finish .finish-line2{color:rgba(255,255,255,.85);font-size:1.15em;font-weight:500;margin-bottom:48px;letter-spacing:1px}
-.finish .finish-sign{color:#ff6b9d;font-size:1.2em;font-weight:600;letter-spacing:2px}
-.finish .finish-hint{color:rgba(255,255,255,.25);font-size:.82em;margin-top:60px;animation:pulse 1.5s infinite}
+.finish .finish-line1{color:rgba(255,255,255,.5);font-size:1em;margin-bottom:16px;letter-spacing:1px}
+.finish .finish-line2{color:rgba(255,255,255,.8);font-size:1.1em;font-weight:500;margin-bottom:48px;letter-spacing:1px}
+.finish .finish-sign{color:#ff6b9d;font-size:1.15em;font-weight:500;letter-spacing:3px}
+.finish .finish-hint{color:rgba(255,255,255,.2);font-size:.78em;margin-top:60px;animation:pulse 1.5s infinite;letter-spacing:1px}
 
-/* 彩带 */
+/* ===== 彩带 ===== */
 .confetti{position:fixed;top:-10px;z-index:150;pointer-events:none}
-</style>

@@ -20,24 +20,26 @@
 <!-- 主界面 -->
 <div class="main">
   <div class="top-bar">
-    <h2>🎁 生日礼物抽奖</h2>
-    <div class="chances">抽奖机会：<span class="num" id="chanceNum">1</span> 次</div>
+    <h2>快来打开你的礼物</h2>
+    <div class="chances">开启机会 <span class="num" id="chanceNum">1</span></div>
   </div>
 
-  <!-- 奖品展示 -->
-  <div class="prizes" id="prizeGrid"></div>
+  <!-- 奖品展示 7个蜂巢式排列 -->
+  <div class="prizes-wrap">
+    <div class="prizes-row"><div class="ph" id="prizeGrid"></div></div>
+  </div>
 
-  <!-- 抽奖按钮 -->
-  <button class="draw-btn" id="drawBtn" onclick="doDraw()">🎰 抽奖！</button>
+  <!-- 开启按钮 -->
+  <button class="draw-btn" id="drawBtn" onclick="doDraw()">开启</button>
 
   <!-- 任务区 -->
   <div class="task-section">
-    <h3>✨ 完成任务赢机会</h3>
+    <h3>✨ 完成互动解锁机会</h3>
     <div id="taskList"></div>
   </div>
 
   <div style="text-align:center;margin-top:8px">
-    <span onclick="resetGame()" style="color:rgba(255,255,255,.2);font-size:.75em;cursor:pointer">重置</span>
+    <span onclick="resetGame()" style="color:rgba(255,255,255,.15);font-size:.7em;cursor:pointer">重置</span>
   </div>
 </div>
 

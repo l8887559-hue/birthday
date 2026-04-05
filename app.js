@@ -6,7 +6,7 @@ const PRIZES = [
   { id: 'hp', emoji: '🎧', name: '耳机', desc: '耳机还得是带麦克风的，实用' },
   { id: 'nk', emoji: '📿', name: '项链', desc: '希望这个项链能受到宝的青睐' },
   { id: 'fl', emoji: '💐', name: '永生花', desc: '你说你不喜欢看鲜花凋零' },
-  { id: 'lt', emoji: '💌', name: '信', desc: '第34封，希望不会来得太晚' }
+  { id: 'lt', emoji: '💌', name: '信', desc: '好久不写信，连写字都生疏了\n希望不会来得太晚' }
 ];
 
 // 固定抽奖顺序：蛋糕→背带→随机→...→信最后
@@ -74,14 +74,14 @@ function render() {
   const remaining = PRIZES.length - state.wonPrizes.length;
   if (remaining === 0) {
     btn.disabled = true;
-    btn.textContent = '🎉 所有礼物已揭晓！';
+    btn.textContent = '已全部开启';
     setTimeout(showFinish, 600);
   } else if (state.chances <= 0) {
     btn.disabled = true;
-    btn.textContent = '💫 完成任务获取抽奖机会';
+    btn.textContent = '完成互动解锁';
   } else {
     btn.disabled = false;
-    btn.textContent = `🎰 抽奖！（剩余${remaining}个礼物）`;
+    btn.textContent = '开启';
   }
 
   // 任务列表
@@ -91,17 +91,17 @@ function render() {
     const done = state.doneTasks.includes(t.id);
     const d = document.createElement('div');
     d.className = 'task-item' + (done ? ' done' : '');
-    d.innerHTML = `<span class="ticon">${t.icon}</span><div class="tinfo">${t.text}<small>+1 抽奖机会</small></div>`;
+    d.innerHTML = `<span class="ticon">${t.icon}</span><div class="tinfo">${t.text}</div>`;
     if (!done && state.wonPrizes.length < PRIZES.length) {
       const b = document.createElement('button');
       b.className = 'task-btn';
-      b.textContent = '完成';
+      b.textContent = done ? '✓' : '完成';
       b.onclick = () => completeTask(t.id, t.reward);
       d.appendChild(b);
     } else if (done) {
       const s = document.createElement('span');
-      s.style.cssText = 'color:#6ec6ff;font-size:.82em';
-      s.textContent = '✓ 已完成';
+      s.style.cssText = 'color:rgba(255,107,157,.5);font-size:.8em;letter-spacing:1px';
+      s.textContent = '✓';
       d.appendChild(s);
     }
     tl.appendChild(d);
